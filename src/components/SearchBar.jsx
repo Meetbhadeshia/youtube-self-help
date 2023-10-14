@@ -1,18 +1,25 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Paper, IconButton } from '@mui/material'
 import { Search } from '@mui/icons-material'
+import searchContext from '../context/search/searchContext'
 
 const SearchBar = () => {
+    const { setGlobalSearchTerm, searchFromPage } = useContext(searchContext)
     const [searchTerm, setSearchTerm] = useState('')
     const navigate = useNavigate()
+    const { pathname } = useLocation();
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (searchTerm) {
-            navigate(`search/${searchTerm}`)
+        if (pathname === "/") {
+            navigate(`/search/${searchTerm}`)
+            setGlobalSearchTerm(searchTerm)
+        } else {
+            setGlobalSearchTerm(searchTerm)
         }
-        setSearchTerm('')
     }
+
     return (
         <Paper
             component="form"

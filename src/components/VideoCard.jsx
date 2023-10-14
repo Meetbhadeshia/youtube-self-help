@@ -33,7 +33,6 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
         } else if (calculatedMonth !== 0) {
             timeMessage = calculatedMonth === 1 ? "1 month ago" : calculatedMonth + " months ago"
         } else if (calculatedDay !== 0) {
-            console.log("currentDay: " + currentDay, "videoDay: " + videoDay)
             timeMessage = calculatedDay === 1 ? "1 day ago" : calculatedDay + " days ago"
         } else if (calculatedHour !== 0) {
             timeMessage = calculatedHour === 1 ? "1 hour ago" : calculatedHour + " hours ago"

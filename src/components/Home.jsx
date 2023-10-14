@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Typography } from "@mui/material"
 import SearchBar from './SearchBar'
 import { Link } from 'react-router-dom'
