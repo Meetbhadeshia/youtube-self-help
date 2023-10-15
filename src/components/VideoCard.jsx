@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Typography, Card, CardContent, CardMedia } from "@mui/material"
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoChannelTitle } from '../utils/constants'
 import { CheckCircle } from "@mui/icons-material"
+import { fetchFromAPI } from "../utils/fetchFromAPI"
 
 const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
+    const [videoDuration, setVideoDuration] = useState('')
     const videoWholeDate = snippet?.publishTime
     let timeMessage
     const timeLeft = () => {
@@ -45,7 +48,10 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
 
     timeLeft()
 
-
+    useEffect(() => {
+        fetchFromAPI(`videos?part=contentDetails,snippet,statistics&id=${videoId}`)
+            .then((data) => { setVideoDuration(data.items[0].contentDetails.duration) })
+    }, [])
 
     return (
         <Card sx={{ width: { md: '23.5vw', sm: '100%' }, boxShadow: 'none', borderRadius: 0 }}>
@@ -71,9 +77,9 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
                 <Typography variant="subtitle2" fontWeight="bold" color="gray">
                     {timeMessage || demoChannelTitle}
                 </Typography>
-                {/* <Typography variant="subtitle2" fontWeight="bold" color="gray">
-                        {snippet?.channelTitle.slice(0, 60) || demoChannelTitle}
-                    </Typography> */}
+                <Typography variant="subtitle2" fontWeight="bold" color="gray">
+                    {videoDuration}
+                </Typography>
             </CardContent>
         </Card >
     )
